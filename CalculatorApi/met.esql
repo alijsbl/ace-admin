@@ -1,0 +1,14 @@
+CREATE PROCEDURE myMethod (IN inRef REFERENCE, IN outRef REFERENCE) BEGIN
+	
+	IF (inRef IS NOT NULL) THEN
+			SET outRef.field = inRef;
+		ElSE
+			DECLARE field REFERENCE TO inRef.*[>];	
+			DECLARE i INTEGER 1;
+	        WHILE LASTMOVE(field) DO
+	        	SET outRef.field[i] = FIELDVALUE(field);
+	        	SET i = i + 1;
+	        	MOVE field NEXTSIBLING;
+		    END WHILE;
+		END IF;
+END;

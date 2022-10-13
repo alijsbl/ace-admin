@@ -1,0 +1,242 @@
+BROKER SCHEMA com.demo.tst
+
+
+DECLARE soapenv NAMESPACE 'http://www.w3.org/2003/05/soap-envelope';
+DECLARE tem NAMESPACE 'http://tempuri.org/';
+
+
+CREATE FILTER MODULE postAdd_Validate
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		
+		SET Environment.Variables.Transaction.Request = Root.JSON.Data;
+		SET Environment.Variables.protocol = Root.Properties.ReplyProtocol;
+		SET Environment.Variables.host = Root.HTTPInputHeader.{'X-Remote-Host'};
+		
+		DECLARE inputRef REFERENCE TO Root.JSON.Data;
+		DECLARE outputRef REFERENCE To Root.JSON.Data;
+		
+		IF (inputRef.A IS NOT NULL) AND (inputRef.B IS NOT NULL) THEN
+			SET Environment.Variables.authorization = 'Pass';
+			RETURN FALSE;
+		ELSE
+			SET Environment.Variables.authorization = 'Failed';
+			Return TRUE;
+		END IF;
+
+			
+		RETURN EXISTS(Environment.Variables.Transaction.Error.Item[]);
+	END;
+END MODULE;
+
+
+
+
+CREATE COMPUTE MODULE postAdd_Prepare_Request
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		DECLARE InRef REFERENCE TO InputRoot.JSON.Data;
+		
+		CREATE FIELD OutputRoot.SOAP.Body.tem:Add;
+		DECLARE OutRef REFERENCE TO OutputRoot.SOAP.Body.tem:Add;
+		
+		SET OutRef.tem:intA=InRef.A;
+		SET OutRef.tem:intB=InRef.B;
+		RETURN TRUE;
+	END;
+END MODULE;
+
+
+CREATE COMPUTE MODULE postAdd_Prepare_Response
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		DECLARE InRef REFERENCE TO InputRoot.XMLNSC.tem:AddResponse;
+		CREATE FIELD OutputRoot.JSON.Data;
+		DECLARE OutRef REFERENCE TO OutputRoot.JSON.Data;
+		DECLARE outputRef REFERENCE TO OutputRoot.JSON.Data;
+		--SET OutputRoot = InputRoot;
+		SET OutRef.Result = InRef.tem:AddResult;
+		
+		RETURN TRUE;
+	END;
+
+END MODULE;
+
+
+CREATE FILTER MODULE postSub_Validate
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		
+		SET Environment.Variables.Transaction.Request = Root.JSON.Data;
+		SET Environment.Variables.protocol = Root.Properties.ReplyProtocol;
+		SET Environment.Variables.host = Root.HTTPInputHeader.{'X-Remote-Host'};
+		
+		DECLARE inputRef REFERENCE TO Root.JSON.Data;
+		DECLARE outputRef REFERENCE To Root.JSON.Data;
+		
+		IF (inputRef.A IS NOT NULL) AND (inputRef.B IS NOT NULL) THEN
+			SET Environment.Variables.authorization = 'Pass';
+			RETURN FALSE;
+		ELSE
+			SET Environment.Variables.authorization = 'Failed';
+			Return TRUE;
+		END IF;
+
+			
+		RETURN EXISTS(Environment.Variables.Transaction.Error.Item[]);
+	END;
+END MODULE;
+
+
+
+
+CREATE COMPUTE MODULE postSub_Prepare_Request
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		DECLARE InRef REFERENCE TO InputRoot.JSON.Data;
+		
+		CREATE FIELD OutputRoot.SOAP.Body.tem:Subtract;
+		DECLARE OutRef REFERENCE TO OutputRoot.SOAP.Body.tem:Subtract;
+		
+		SET OutRef.tem:intA=InRef.A;
+		SET OutRef.tem:intB=InRef.B;
+		RETURN TRUE;
+	END;
+END MODULE;
+
+
+CREATE COMPUTE MODULE postSub_Prepare_Response
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		DECLARE InRef REFERENCE TO InputRoot.XMLNSC.tem:SubtractResponse;
+		CREATE FIELD OutputRoot.JSON.Data;
+		DECLARE OutRef REFERENCE TO OutputRoot.JSON.Data;
+		--SET OutputRoot = InputRoot;
+		SET OutRef.Result = InRef.tem:SubtractResult;
+		
+		RETURN TRUE;
+	END;
+
+END MODULE;
+
+
+
+
+
+CREATE FILTER MODULE postDiv_Validate
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		
+		SET Environment.Variables.Transaction.Request = Root.JSON.Data;
+		SET Environment.Variables.protocol = Root.Properties.ReplyProtocol;
+		SET Environment.Variables.host = Root.HTTPInputHeader.{'X-Remote-Host'};
+		
+		DECLARE inputRef REFERENCE TO Root.JSON.Data;
+		DECLARE outputRef REFERENCE To Root.JSON.Data;
+		
+		IF (inputRef.A IS NOT NULL) AND (inputRef.B IS NOT NULL) THEN
+			SET Environment.Variables.authorization = 'Pass';
+			RETURN FALSE;
+		ELSE
+			SET Environment.Variables.authorization = 'Failed';
+			Return TRUE;
+		END IF;
+
+			
+		RETURN EXISTS(Environment.Variables.Transaction.Error.Item[]);
+	END;
+END MODULE;
+
+
+
+
+CREATE COMPUTE MODULE postDiv_Prepare_Request
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		DECLARE InRef REFERENCE TO InputRoot.JSON.Data;
+		
+		CREATE FIELD OutputRoot.SOAP.Body.tem:Divide;
+		DECLARE OutRef REFERENCE TO OutputRoot.SOAP.Body.tem:Divide;
+		
+		SET OutRef.tem:intA=InRef.A;
+		SET OutRef.tem:intB=InRef.B;
+		RETURN TRUE;
+	END;
+END MODULE;
+
+
+CREATE COMPUTE MODULE postDiv_Prepare_Response
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		DECLARE InRef REFERENCE TO InputRoot.XMLNSC.tem:DivideResponse;
+		CREATE FIELD OutputRoot.JSON.Data;
+		DECLARE OutRef REFERENCE TO OutputRoot.JSON.Data;
+		DECLARE outputRef REFERENCE TO OutputRoot.JSON.Data;
+		--SET OutputRoot = InputRoot;
+		SET OutRef.Result = InRef.tem:DivideResult;
+		
+		RETURN TRUE;
+	END;
+
+END MODULE;
+
+
+
+
+
+CREATE FILTER MODULE postMul_Validate
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		
+		SET Environment.Variables.Transaction.Request = Root.JSON.Data;
+		SET Environment.Variables.protocol = Root.Properties.ReplyProtocol;
+		SET Environment.Variables.host = Root.HTTPInputHeader.{'X-Remote-Host'};
+		
+		DECLARE inputRef REFERENCE TO Root.JSON.Data;
+		DECLARE outputRef REFERENCE To Root.JSON.Data;
+		
+		IF (inputRef.A IS NOT NULL) AND (inputRef.B IS NOT NULL) THEN
+			SET Environment.Variables.authorization = 'Pass';
+			RETURN FALSE;
+		ELSE
+			SET Environment.Variables.authorization = 'Failed';
+			Return TRUE;
+		END IF;
+
+			
+		RETURN EXISTS(Environment.Variables.Transaction.Error.Item[]);
+	END;
+END MODULE;
+
+
+
+
+CREATE COMPUTE MODULE postMul_Prepare_Request
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		DECLARE InRef REFERENCE TO InputRoot.JSON.Data;
+		
+		CREATE FIELD OutputRoot.SOAP.Body.tem:Multiply;
+		DECLARE OutRef REFERENCE TO OutputRoot.SOAP.Body.tem:Multiply;
+		
+		SET OutRef.tem:intA=InRef.A;
+		SET OutRef.tem:intB=InRef.B;
+		RETURN TRUE;
+	END;
+END MODULE;
+
+
+CREATE COMPUTE MODULE postMul_Prepare_Response
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		DECLARE InRef REFERENCE TO InputRoot.XMLNSC.tem:MultiplyResponse;
+		CREATE FIELD OutputRoot.JSON.Data;
+		DECLARE OutRef REFERENCE TO OutputRoot.JSON.Data;
+		DECLARE outputRef REFERENCE TO OutputRoot.JSON.Data;
+		--SET OutputRoot = InputRoot;
+		SET OutRef.Result = InRef.tem:MultiplyResult;
+		
+		RETURN TRUE;
+	END;
+
+END MODULE;
