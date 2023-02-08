@@ -1,0 +1,33 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "title" : "TME",
+    "version" : "1.0.0",
+    "description" : "TME"
+  },
+  "paths" : {
+    "/inquiry" : {
+      "post" : {
+        "operationId" : "postInquiry",
+        "responses" : {
+          "200" : {
+            "description" : "The operation was successful."
+          }
+        },
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "description" : "Insert a inquiry",
+        "parameters" : [ {
+          "name" : "body",
+          "in" : "body",
+          "schema" : {
+            "type" : "string"
+          },
+          "description" : "The request body for the operation",
+          "required" : true
+        } ]
+      }
+    }
+  },
+  "basePath" : "/tme/v1"
+}
